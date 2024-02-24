@@ -6,6 +6,7 @@ import { type RouterOutputs } from "src/trpc/shared";
 import { set } from "zod";
 import { NoteEditor } from "./NoteEditor";
 import { create } from "domain";
+import { NoteCard } from "./NoteCard";
 
 type Topic = RouterOutputs["topic"]["getAll"][0];
 export const Content: React.FC = () => {
@@ -39,6 +40,12 @@ export const Content: React.FC = () => {
   );
 
   const createNote = api.note.create.useMutation({
+    onSuccess: () => {
+      void refetchNotes();
+    },
+  });
+
+  const deleteNote = api.note.delete.useMutation({
     onSuccess: () => {
       void refetchNotes();
     },
@@ -78,6 +85,16 @@ export const Content: React.FC = () => {
         />
       </div>
       <div className="col-span-3">
+        <div>
+          {notes?.map((note) => (
+            <div key={note.id} className="mt-5">
+              <NoteCard
+                note={note}
+                onDelete={() => void deleteNote.mutate({ id: note.id })}
+              />
+            </div>
+          ))}
+        </div>
         <NoteEditor
           onSave={({ title, content }) => {
             void createNote.mutate({
