@@ -3,6 +3,9 @@ import { useSession } from "next-auth/react";
 import { api } from "~/trpc/react";
 import { useState } from "react";
 import { type RouterOutputs } from "src/trpc/shared";
+import { set } from "zod";
+import { NoteEditor } from "./NoteEditor";
+import { create } from "domain";
 
 type Topic = RouterOutputs["topic"]["getAll"][0];
 export const Content: React.FC = () => {
@@ -25,6 +28,22 @@ export const Content: React.FC = () => {
     },
   });
 
+  const { data: notes, refetch: refetchNotes } = api.note.getAll.useQuery(
+    {
+      topicId: selectedTopic?.id ?? "",
+    },
+    {
+      //will only run if we have both a user and a selected topic
+      enabled: session?.user !== undefined && selectedTopic !== null,
+    },
+  );
+
+  const createNote = api.note.create.useMutation({
+    onSuccess: () => {
+      void refetchNotes();
+    },
+  });
+
   return (
     <div className="mx-5 mt-5 grid grid-cols-4 gap-2">
       <div className="px-2">
@@ -35,6 +54,7 @@ export const Content: React.FC = () => {
                 href="#"
                 onClick={(evt) => {
                   evt.preventDefault();
+                  setSelectedTopic(topic);
                 }}
               >
                 {topic.title}
@@ -57,7 +77,17 @@ export const Content: React.FC = () => {
           }}
         />
       </div>
-      <div className="col-span-3"></div>
+      <div className="col-span-3">
+        <NoteEditor
+          onSave={({ title, content }) => {
+            void createNote.mutate({
+              title,
+              content,
+              topicId: selectedTopic?.id ?? "",
+            });
+          }}
+        ></NoteEditor>
+      </div>
     </div>
   );
 };
