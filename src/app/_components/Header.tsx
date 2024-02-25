@@ -18,9 +18,9 @@ export const Header = () => {
             <label
               tabIndex={0}
               className="avatar btn btn-circle btn-ghost"
-              onClick={() => void signOut}
+              onClick={() => void signOut()}
             >
-              <div className="w-10 rounded-full">
+              <div className="relative h-10 w-10 overflow-hidden rounded-full">
                 <Image
                   src={session?.user?.image ?? ""}
                   alt={session?.user?.name ?? ""}
