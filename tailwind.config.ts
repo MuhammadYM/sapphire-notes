@@ -12,6 +12,6 @@ export default {
   },
   plugins: [require("daisyui"), require("@tailwindcss/typography")],
   daisyui: {
-    themes: ["retro"],
+    themes: ["retro", "lemonade", "forest", "luxury", "autumn"],
   },
 } satisfies Config;

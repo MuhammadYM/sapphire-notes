@@ -8,7 +8,7 @@ export const Header = () => {
   const { data: session } = useSession();
 
   return (
-    <div className="navbar bg-primary text-primary-content" data-theme="retro">
+    <div className="navbar bg-primary text-primary-content" data-theme="autumn">
       <div className="flex-1 pl-5 text-3xl font-bold">
         {session ? `Notes for ${session.user.name}` : "Notetaker "}
       </div>
