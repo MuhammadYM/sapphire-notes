@@ -3,9 +3,7 @@ import { useSession } from "next-auth/react";
 import { api } from "~/trpc/react";
 import { useState } from "react";
 import { type RouterOutputs } from "src/trpc/shared";
-import { set } from "zod";
 import { NoteEditor } from "./NoteEditor";
-import { create } from "domain";
 import { NoteCard } from "./NoteCard";
 
 type Topic = RouterOutputs["topic"]["getAll"][0];
