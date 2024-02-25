@@ -49,7 +49,7 @@ export const NoteEditor = ({
             setCode("");
             setTitle("");
           }}
-          className="btn btn-primary"
+          className="btn btn-primary m-5"
           disabled={title.trim().length === 0 || code.trim().length === 0}
         >
           Save
