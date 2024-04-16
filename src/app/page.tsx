@@ -1,4 +1,5 @@
 "use client";
+
 import Header from "./_components/Header";
 import { useEffect } from "react";
 
@@ -25,19 +26,9 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col" data-theme="lemonade">
-      <button id="notifications"></button>
+      <button id="notifications">Allow notifications!</button>
       <Header />
       <Content />
     </main>
   );
-}
-
-function randomNotification() {
-  const random = Math.floor(Math.random() * 1000);
-  const notification = new Notification("Hello, world!", {
-    body: `Random number: ${random}`,
-  });
-  notification.onclick = () => {
-    window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
-  };
 }
