@@ -9,7 +9,8 @@ export const Header = () => {
 
   return (
     <div className="navbar bg-primary text-primary-content" data-theme="autumn">
-      <div className="flex-1 pl-5 text-3xl font-bold">
+      <div className="flex-1 gap-x-1 pl-5 text-3xl font-bold">
+        <Image src="/sapphire.svg" width={25} height={25} alt="logo"></Image>
         {session ? `Notes for ${session.user.name}` : "Notetaker "}
       </div>
       <div className="flex-none gap-2">
