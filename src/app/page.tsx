@@ -31,9 +31,11 @@ export default function Home() {
     const randomItemIndex = Math.floor(Math.random() * words.length);
     const notifTitle = words[randomItemIndex] ?? "Word of the Moment";
     const notifBody = `Word of the Moment: ${words[randomItemIndex]}`;
+    const notifImg = `/sapphire.svg`;
 
     const options = {
       body: notifBody,
+      icon: notifImg,
     };
 
     new Notification(notifTitle, options);
@@ -41,17 +43,33 @@ export default function Home() {
   }
 
   useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/sw.js")
+        .then((registration) => {
+          console.log(
+            "Service Worker registered with scope:",
+            registration.scope,
+          );
+        })
+        .catch((err) => {
+          console.error("Service Worker registration failed:", err);
+        });
+    }
+
     const button = document.getElementById("notifications");
     if (button) {
-      button.onclick = requestNotificationPermission;
+      button.addEventListener(
+        "notificationclick",
+        requestNotificationPermission,
+      );
+      button.addEventListener("push", randomNotification);
     }
   }, []);
 
   return (
     <main className="flex min-h-screen flex-col" data-theme="lemonade">
-      <button id="notifications" className="btn btn-neutral">
-        Allow notifications!
-      </button>
+      <button id="notifications">Allow notifications!</button>
       <Header />
       <Content />
     </main>
