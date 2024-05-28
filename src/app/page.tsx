@@ -2,6 +2,8 @@
 
 import Header from "./_components/Header";
 import { useEffect } from "react";
+import dotenv from "dotenv";
+dotenv.config();
 
 import Content from "./_components/Content";
 
@@ -15,17 +17,6 @@ export default function Home() {
     "JavaScript",
     "Programming",
   ];
-  async function requestNotificationPermission() {
-    try {
-      const result = await Notification.requestPermission();
-      if (result === "granted") {
-        // Trigger your notification here
-        randomNotification();
-      }
-    } catch (error) {
-      console.error("Error showing notification", error);
-    }
-  }
 
   function randomNotification() {
     const randomItemIndex = Math.floor(Math.random() * words.length);
@@ -44,28 +35,74 @@ export default function Home() {
 
   useEffect(() => {
     if ("serviceWorker" in navigator) {
-      navigator.serviceWorker
-        .register("/sw.js")
-        .then((registration) => {
-          console.log(
-            "Service Worker registered with scope:",
-            registration.scope,
-          );
-        })
-        .catch((err) => {
-          console.error("Service Worker registration failed:", err);
-        });
+      const handleServiceWorker = async () => {
+        try {
+          const register = await navigator.serviceWorker.register("/sw.js");
+          console.log("Service Worker registered:", register);
+        } catch (error) {
+          console.error("Service Worker registration failed:", error);
+        }
+      };
+      handleServiceWorker();
     }
 
     const button = document.getElementById("notifications");
     if (button) {
-      button.addEventListener(
-        "notificationclick",
-        requestNotificationPermission,
-      );
-      button.addEventListener("push", randomNotification);
+      button.addEventListener("click", requestNotificationPermission);
     }
   }, []);
+
+  const requestNotificationPermission = async () => {
+    try {
+      const permission = await Notification.requestPermission();
+      if (permission === "granted") {
+        await subscribeUserToPush();
+      } else {
+        console.log("Notification permission denied");
+      }
+    } catch (error) {
+      console.error("Error requesting notification permission:", error);
+    }
+  };
+
+  const subscribeUserToPush = async () => {
+    try {
+      const register = await navigator.serviceWorker.ready;
+
+      const subscription = await register.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlB64ToUint8Array(
+          process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
+        ),
+      });
+
+      const res = await fetch("http://localhost:3000/", {
+        method: "POST",
+        body: JSON.stringify(subscription),
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+
+      const data = await res.json();
+      console.log("Push subscription:", data);
+    } catch (error) {
+      console.error("Error subscribing to push notifications:", error);
+    }
+  };
+
+  function urlB64ToUint8Array(base64String) {
+    const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+    const base64 = (base64String + padding)
+      .replace(/\-/g, "+")
+      .replace(/_/g, "/");
+    const rawData = window.atob(base64);
+    const outputArray = new Uint8Array(rawData.length);
+    for (let i = 0; i < rawData.length; ++i) {
+      outputArray[i] = rawData.charCodeAt(i);
+    }
+    return outputArray;
+  }
 
   return (
     <main className="flex min-h-screen flex-col" data-theme="lemonade">

@@ -1,15 +1,18 @@
 self.addEventListener("push", (event) => {
-  let data = event.data.json();
-  const image =
-    "https://cdn.glitch.com/614286c9-b4fc-4303-a6a9-a4cef0601b74%2Flogo.png?v=1605150951230";
-  const options = {
-    body: data.options.body,
-    icon: image,
-  };
-  self.registration.showNotification(data.title, options);
-});
+  const data = event.data.json();
+  const title = data.title;
+  const body = data.body;
+  const icon = data.icon;
+  const url = data.data.url;
 
-self.addEventListener("notificationclick", (event) => {
-  event.notification.close();
-  event.waitUntil(self.clients.openWindow("http://localhost:3000/"));
+  const notificationOptions = {
+    body: body,
+    tag: "unique-tag", // Use a unique tag to prevent duplicate notifications
+    icon: icon,
+    data: {
+      url: url, // Replace with the desired URL for redirecting user to the desired page
+    },
+  };
+
+  self.registration.showNotification(title, notificationOptions);
 });

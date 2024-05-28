@@ -16,5 +16,6 @@ export default function manifest(): MetadataRoute.Manifest {
         type: "image/x-icon",
       },
     ],
+    gcm_sender_id: "103953800507",
   };
 }

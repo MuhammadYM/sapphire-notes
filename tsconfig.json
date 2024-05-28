@@ -15,7 +15,7 @@
     "checkJs": true,
 
     /* Bundled projects */
-    "lib": ["dom", "dom.iterable", "ES2022", "WebWorker", "ESNext"],
+    "lib": ["dom", "dom.iterable", "ES2022", "webworker", "ESNext"],
     "noEmit": true,
     "module": "ESNext",
     "moduleResolution": "Bundler",
