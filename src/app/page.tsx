@@ -75,14 +75,20 @@ export default function Home() {
           process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
         ),
       });
+      console.log("Push subscription:", subscription);
 
-      const res = await fetch("http://localhost:3000/", {
+      const res = await fetch("http://localhost:4000/subscribe", {
         method: "POST",
         body: JSON.stringify(subscription),
         headers: {
           "content-type": "application/json",
         },
       });
+      console.log("Response:", res);
+
+      if (!res.ok) {
+        throw new Error(`Server error: ${res.status}`);
+      }
 
       const data = await res.json();
       console.log("Push subscription:", data);
