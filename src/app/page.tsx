@@ -35,7 +35,7 @@ export default function Home() {
     if ("serviceWorker" in navigator) {
       const handleServiceWorker = async () => {
         try {
-          const register = await navigator.serviceWorker.register("/sw.js");
+          const register = await navigator.serviceWorker.register("/sw.ts");
           console.log("Service Worker registered:", register);
         } catch (error) {
           console.error("Service Worker registration failed:", error);
