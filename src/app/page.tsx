@@ -2,8 +2,6 @@
 
 import Header from "./_components/Header";
 import { useEffect } from "react";
-import dotenv from "dotenv";
-dotenv.config();
 
 import Content from "./_components/Content";
 
