@@ -77,7 +77,7 @@ export default function Home() {
       });
       console.log("Push subscription:", subscription);
 
-      const res = await fetch("http://localhost:4000/subscribe", {
+      const res = await fetch("https://sapphire-gamma.vercel.app/subscribe", {
         method: "POST",
         body: JSON.stringify(subscription),
         headers: {
@@ -92,6 +92,7 @@ export default function Home() {
 
       const data = await res.json();
       console.log("Push subscription:", data);
+      randomNotification();
     } catch (error) {
       console.error("Error subscribing to push notifications:", error);
     }
