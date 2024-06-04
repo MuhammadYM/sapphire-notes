@@ -35,7 +35,7 @@ export default function Home() {
     if ("serviceWorker" in navigator) {
       const handleServiceWorker = async () => {
         try {
-          const register = await navigator.serviceWorker.register("/sw.ts");
+          const register = await navigator.serviceWorker.register("/sw.js");
           console.log("Service Worker registered:", register);
         } catch (error) {
           console.error("Service Worker registration failed:", error);
@@ -74,8 +74,11 @@ export default function Home() {
         ),
       });
       console.log("Push subscription:", subscription);
-
-      const res = await fetch("https://sapphire-gamma.vercel.app/subscribe", {
+      const Url =
+        process.env.NODE_ENV === "development"
+          ? "http://localhost:4000"
+          : "https://sapphire-gamma.vercel.app";
+      const res = await fetch(`${Url}/subscribe`, {
         method: "POST",
         body: JSON.stringify(subscription),
         headers: {
