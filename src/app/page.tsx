@@ -41,11 +41,12 @@ export default function Home() {
           console.error("Service Worker registration failed:", error);
         }
       };
-      handleServiceWorker();
+      void handleServiceWorker();
     }
 
     const button = document.getElementById("notifications");
     if (button) {
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       button.addEventListener("click", requestNotificationPermission);
     }
   }, []);
@@ -70,7 +71,7 @@ export default function Home() {
       const subscription = await register.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: urlB64ToUint8Array(
-          process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
+          process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? "",
         ),
       });
       console.log("Push subscription:", subscription);
@@ -91,6 +92,7 @@ export default function Home() {
         throw new Error(`Server error: ${res.status}`);
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const data = await res.json();
       console.log("Push subscription:", data);
       randomNotification();
@@ -99,8 +101,8 @@ export default function Home() {
     }
   };
 
-  function urlB64ToUint8Array(base64String) {
-    const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+  function urlB64ToUint8Array(base64String: string) {
+    const padding = "=".repeat((4 - (base64String?.length % 4)) % 4);
     const base64 = (base64String + padding)
       .replace(/\-/g, "+")
       .replace(/_/g, "/");

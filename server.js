@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import express from "express";
 import webpush from "web-push";
 import dotenv from "dotenv";
@@ -21,15 +22,21 @@ const vapidKeys = {
   vapid_subject: process.env.VAPID_SUBJECT,
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 webpush.setVapidDetails(
+  // @ts-expect-error this is a bug in the typescript definitions
   vapidKeys.vapid_subject,
   vapidKeys.publicKey,
   vapidKeys.privateKey,
 );
 
+/**
+ * @type {any[]}
+ */
 let subscriptions = [];
 
 app.post("/subscribe", (req, res) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const subscription = req.body;
   subscriptions.push(subscription);
 
@@ -48,6 +55,7 @@ app.post("/send-notification", (req, res) => {
 
   Promise.all(
     subscriptions.map((subscription) =>
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
       webpush.sendNotification(
         subscription,
         JSON.stringify(notificationPayload),
