@@ -27,23 +27,28 @@ export const NoteCard = ({
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
 
   return (
-    <div className="card mt-5 border border-gray-200 bg-base-100 shadow-xl">
-      <div className="card-body m-0 p-3">
+    <div className="card bg-base-100 shadow-lg border border-base-300 hover:shadow-xl transition-shadow">
+      <div className="card-body p-5">
         <div
           className={`collapse-arrow ${
             isExpanded ? "collapse-open" : ""
-          } collapse`}
+          } collapse border-none bg-transparent`}
           onClick={() => setIsExpanded(!isExpanded)}
         >
-          <div className="collapse-title text-xl font-bold">{note.title}</div>
-          <div className="collapse-content">
-            <article className="prose lg:prose-xl">
+          <div className="collapse-title text-xl font-bold px-0 py-2 min-h-0">
+            {note.title}
+          </div>
+          <div className="collapse-content px-0 pb-2">
+            <article className="prose prose-sm max-w-none text-base-content/80">
               <ReactMarkdown>{note.content}</ReactMarkdown>
             </article>
           </div>
         </div>
-        <div className="card-actions mx-2 flex justify-end">
-          <button className="btn btn-warning btn-xs px-5" onClick={onDelete}>
+        <div className="card-actions justify-end pt-2 mt-2 border-t border-base-300">
+          <button 
+            className="btn btn-error btn-sm" 
+            onClick={onDelete}
+          >
             Delete
           </button>
         </div>
