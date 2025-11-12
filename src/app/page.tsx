@@ -116,9 +116,16 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col" data-theme="nord">
-      <button id="notifications">Allow notifications!</button>
       <Header />
-      <Content />
+      <div className="container mx-auto max-w-7xl px-4 py-6">
+        <Content />
+      </div>
+      <button 
+        id="notifications" 
+        className="fixed bottom-6 right-6 btn btn-sm btn-ghost opacity-70 hover:opacity-100 transition-opacity z-10"
+      >
+        🔔 Allow notifications
+      </button>
     </main>
   );
 }

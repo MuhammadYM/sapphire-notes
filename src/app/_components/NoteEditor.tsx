@@ -15,45 +15,47 @@ export const NoteEditor = ({
   const [title, setTitle] = useState<string>("");
 
   return (
-    <div className="card mt-5 border border-gray-200 bg-base-100 shadow-xl">
-      <div className="card-body">
-        <h2 className="card-title">
+    <div className="card bg-base-100 shadow-lg border border-base-300">
+      <div className="card-body p-6">
+        <h2 className="card-title mb-4">
           <input
             type="text"
             placeholder="Note title"
-            className="input input-primary input-lg w-full font-bold"
+            className="input input-bordered input-lg w-full font-bold"
             value={title}
             onChange={(e) => setTitle(e.currentTarget.value)}
           />
         </h2>
-        <CodeMirror
-          value={code}
-          width="500px"
-          height="30vh"
-          minWidth="100%"
-          minHeight="30vh"
-          extensions={[
-            markdown({ base: markdownLanguage, codeLanguages: languages }),
-          ]}
-          onChange={(value) => setCode(value)}
-          className="border border-gray-300"
-        />
-      </div>
-      <div className="card-actions justify-end">
-        <button
-          onClick={() => {
-            onSave({
-              title,
-              content: code,
-            });
-            setCode("");
-            setTitle("");
-          }}
-          className="btn btn-primary m-5"
-          disabled={title.trim().length === 0 || code.trim().length === 0}
-        >
-          Save
-        </button>
+        <div className="mb-4">
+          <CodeMirror
+            value={code}
+            width="100%"
+            height="40vh"
+            minWidth="100%"
+            minHeight="40vh"
+            extensions={[
+              markdown({ base: markdownLanguage, codeLanguages: languages }),
+            ]}
+            onChange={(value) => setCode(value)}
+            className="border border-base-300 rounded-lg overflow-hidden"
+          />
+        </div>
+        <div className="card-actions justify-end pt-4 border-t border-base-300">
+          <button
+            onClick={() => {
+              onSave({
+                title,
+                content: code,
+              });
+              setCode("");
+              setTitle("");
+            }}
+            className="btn btn-primary"
+            disabled={title.trim().length === 0 || code.trim().length === 0}
+          >
+            Save Note
+          </button>
+        </div>
       </div>
     </div>
   );
