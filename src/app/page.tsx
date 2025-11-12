@@ -117,15 +117,30 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col" data-theme="nord">
       <Header />
+      <div className="bg-success/10 border-b border-success/20">
+        <div className="container mx-auto max-w-7xl px-4 py-3">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="text-xl">🔔</div>
+              <div>
+                <h3 className="font-semibold text-sm text-base-content">Enable Notifications</h3>
+                <p className="text-xs text-base-content/80">
+                  Get notified about important updates
+                </p>
+              </div>
+            </div>
+            <button 
+              id="notifications" 
+              className="btn btn-success btn-sm whitespace-nowrap"
+            >
+              Allow notifications
+            </button>
+          </div>
+        </div>
+      </div>
       <div className="container mx-auto max-w-7xl px-4 py-6">
         <Content />
       </div>
-      <button 
-        id="notifications" 
-        className="fixed bottom-6 right-6 btn btn-sm btn-ghost opacity-70 hover:opacity-100 transition-opacity z-10"
-      >
-        🔔 Allow notifications
-      </button>
     </main>
   );
 }
