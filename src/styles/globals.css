@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom text selection color */
+::selection {
+  background-color: #ffad9b;
+}
+
+/* For Firefox compatibility */
+::-moz-selection {
+  background-color: #ffad9b;
+}

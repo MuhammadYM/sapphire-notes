@@ -5,13 +5,23 @@ import ReactMarkdown from "react-markdown";
 
 import { type RouterOutputs } from "src/trpc/shared";
 
-type Note = RouterOutputs["note"]["getAll"][0];
+type ServerNote = RouterOutputs["note"]["getAll"][0];
+
+// Flexible note type that works with both server and local notes
+export interface NoteCardProps {
+  id: string;
+  title: string;
+  content: string;
+  topicId: string;
+  createdAt: string | Date;
+  updatedAt: string | Date;
+}
 
 export const NoteCard = ({
   note,
   onDelete,
 }: {
-  note: Note;
+  note: NoteCardProps;
   onDelete: () => void;
 }) => {
   const [isExpanded, setIsExpanded] = useState<boolean>(true);

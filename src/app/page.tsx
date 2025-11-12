@@ -115,7 +115,7 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col" data-theme="lemonade">
+    <main className="flex min-h-screen flex-col" data-theme="nord">
       <button id="notifications">Allow notifications!</button>
       <Header />
       <Content />
