@@ -117,29 +117,26 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col" data-theme="nord">
       <Header />
-      <div className="bg-success/10 border-b border-success/20">
-        <div className="container mx-auto max-w-7xl px-4 py-3">
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="text-xl">🔔</div>
-              <div>
-                <h3 className="font-semibold text-sm text-base-content">Enable Notifications</h3>
-                <p className="text-xs text-base-content/80">
-                  Get notified about important updates
-                </p>
-              </div>
+      <div className="container mx-auto max-w-7xl px-4 py-6">
+        <Content />
+      </div>
+      <div className="fixed top-12 left-1/2 transform -translate-x-1/2 z-10">
+        <div className="bg-base-300 shadow-xl rounded-lg px-4 py-3 border border-base-content/10">
+          <div className="flex items-center gap-4">
+            <div className="flex-1">
+              <p className="text-sm font-medium text-base-content">Enable Notifications</p>
+              <p className="text-xs text-base-content/70 mt-0.5">
+                Get notified about important updates
+              </p>
             </div>
             <button 
               id="notifications" 
-              className="btn btn-success btn-sm whitespace-nowrap"
+              className="btn btn-sm bg-base-content text-base-300 hover:bg-base-content/90 border-0 rounded-md px-4"
             >
-              Allow notifications
+              Allow
             </button>
           </div>
         </div>
-      </div>
-      <div className="container mx-auto max-w-7xl px-4 py-6">
-        <Content />
       </div>
     </main>
   );

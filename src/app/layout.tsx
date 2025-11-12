@@ -6,11 +6,17 @@ import SessionProvider from "./_components/SessionProvider";
 import { getServerSession } from "next-auth";
 
 import { TRPCReactProvider } from "~/trpc/react";
-import { Open_Sans } from "next/font/google";
+import { Open_Sans, Montserrat } from "next/font/google";
 
 const openSans = Open_Sans({
   subsets: ["latin"],
   display: "swap",
+});
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-montserrat",
 });
 export const metadata = {
   title: "Notetaker ",
@@ -27,7 +33,7 @@ export default async function RootLayout({
 }) {
   const session = await getServerSession();
   return (
-    <html lang="en" className={openSans.className}>
+    <html lang="en" className={`${openSans.className} ${montserrat.variable}`}>
       <body>
         <TRPCReactProvider cookies={cookies().toString()}>
           <SessionProvider session={session}>{children}</SessionProvider>
