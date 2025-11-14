@@ -15,47 +15,43 @@ export const NoteEditor = ({
   const [title, setTitle] = useState<string>("");
 
   return (
-    <div className="card bg-base-100 shadow-lg border border-base-300">
-      <div className="card-body p-6">
-        <h2 className="card-title mb-4">
-          <input
-            type="text"
-            placeholder="Note title"
-            className="input input-bordered input-lg w-full font-bold"
-            value={title}
-            onChange={(e) => setTitle(e.currentTarget.value)}
-          />
-        </h2>
-        <div className="mb-4">
-          <CodeMirror
-            value={code}
-            width="100%"
-            height="40vh"
-            minWidth="100%"
-            minHeight="40vh"
-            extensions={[
-              markdown({ base: markdownLanguage, codeLanguages: languages }),
-            ]}
-            onChange={(value) => setCode(value)}
-            className="border border-base-300 rounded-lg overflow-hidden"
-          />
-        </div>
-        <div className="card-actions justify-end pt-4 border-t border-base-300">
-          <button
-            onClick={() => {
-              onSave({
-                title,
-                content: code,
-              });
-              setCode("");
-              setTitle("");
-            }}
-            className="btn btn-primary"
-            disabled={title.trim().length === 0 || code.trim().length === 0}
-          >
-            Save Note
-          </button>
-        </div>
+    <div className="space-y-4">
+      <input
+        type="text"
+        placeholder="Note title"
+        className="w-full bg-base-200 text-xl font-semibold placeholder:text-base-content/40 focus:outline-none px-4 py-3 rounded-lg transition-colors"
+        value={title}
+        onChange={(e) => setTitle(e.currentTarget.value)}
+      />
+      <div className="bg-base-200 rounded-lg overflow-hidden p-4">
+        <CodeMirror
+          value={code}
+          width="100%"
+          height="40vh"
+          minWidth="100%"
+          minHeight="40vh"
+          extensions={[
+            markdown({ base: markdownLanguage, codeLanguages: languages }),
+          ]}
+          onChange={(value) => setCode(value)}
+          className="rounded overflow-hidden"
+        />
+      </div>
+      <div className="flex justify-end">
+        <button
+          onClick={() => {
+            onSave({
+              title,
+              content: code,
+            });
+            setCode("");
+            setTitle("");
+          }}
+          className="px-4 py-2 bg-base-content text-base-100 rounded hover:opacity-80 transition-opacity disabled:opacity-30 disabled:cursor-not-allowed text-sm font-medium"
+          disabled={title.trim().length === 0 || code.trim().length === 0}
+        >
+          Save Note
+        </button>
       </div>
     </div>
   );
