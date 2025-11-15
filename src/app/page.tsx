@@ -1,11 +1,13 @@
 "use client";
 
 import Header from "./_components/Header";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import Content from "./_components/Content";
 
 export default function Home() {
+  const [notificationGranted, setNotificationGranted] = useState(false);
+
   const words = [
     "Hello",
     "World",
@@ -44,10 +46,9 @@ export default function Home() {
       void handleServiceWorker();
     }
 
-    const button = document.getElementById("notifications");
-    if (button) {
-      // eslint-disable-next-line @typescript-eslint/no-misused-promises
-      button.addEventListener("click", requestNotificationPermission);
+    // Check if notification permission is already granted
+    if (typeof Notification !== "undefined" && Notification.permission === "granted") {
+      setNotificationGranted(true);
     }
   }, []);
 
@@ -55,6 +56,14 @@ export default function Home() {
     try {
       const permission = await Notification.requestPermission();
       if (permission === "granted") {
+        setNotificationGranted(true);
+
+        // Show immediate confirmation notification
+        new Notification("Notifications Enabled", {
+          body: "You'll now receive notifications from Sapphire Notes",
+          icon: "/sapphire.svg",
+        });
+
         await subscribeUserToPush();
       } else {
         console.log("Notification permission denied");
@@ -120,24 +129,26 @@ export default function Home() {
       <div className="container mx-auto max-w-7xl px-4 py-6">
         <Content />
       </div>
-      <div className="fixed top-12 left-1/2 transform -translate-x-1/2 z-10">
-        <div className="bg-base-300 shadow-xl rounded-lg px-4 py-3 border border-base-content/10">
-          <div className="flex items-center gap-4">
-            <div className="flex-1">
-              <p className="text-sm font-medium text-base-content">Enable Notifications</p>
-              <p className="text-xs text-base-content/70 mt-0.5">
-                Get notified about important updates
-              </p>
+      {!notificationGranted && (
+        <div className="fixed top-12 left-1/2 transform -translate-x-1/2 z-10">
+          <div className="bg-base-300 shadow-xl rounded-lg px-4 py-3 border border-base-content/10">
+            <div className="flex items-center gap-4">
+              <div className="flex-1">
+                <p className="text-sm font-medium text-base-content">Enable Notifications</p>
+                <p className="text-xs text-base-content/70 mt-0.5">
+                  Get notified about important updates
+                </p>
+              </div>
+              <button
+                onClick={() => void requestNotificationPermission()}
+                className="btn btn-sm bg-base-content text-base-300 hover:bg-base-content/90 border-0 rounded-md px-4"
+              >
+                Allow
+              </button>
             </div>
-            <button 
-              id="notifications" 
-              className="btn btn-sm bg-base-content text-base-300 hover:bg-base-content/90 border-0 rounded-md px-4"
-            >
-              Allow
-            </button>
           </div>
         </div>
-      </div>
+      )}
     </main>
   );
 }
