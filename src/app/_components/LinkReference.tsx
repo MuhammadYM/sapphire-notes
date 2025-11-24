@@ -35,16 +35,16 @@ export const LinkReference = () => {
         reference = `[${metadata.title}](${metadata.url})`;
         break;
       case "apa":
-        reference = `${metadata.author ? `${metadata.author}. ` : ""}(${new Date(metadata.date || "").getFullYear() || "n.d."}). ${metadata.title}. Retrieved from ${metadata.url}`;
+        reference = `${metadata.author ? `${metadata.author}. ` : ""}(${new Date(metadata.date ?? "").getFullYear() ?? "n.d."}). ${metadata.title}. Retrieved from ${metadata.url}`;
         break;
       case "mla":
         reference = `${metadata.author ? `${metadata.author}. ` : ""}"${metadata.title}." ${metadata.date ? `${metadata.date}. ` : ""}${metadata.url}`;
         break;
       case "harvard":
-        reference = `${metadata.author ? `${metadata.author} ` : ""}(${new Date(metadata.date || "").getFullYear() || "n.d."}) ${metadata.title}. Available at: ${metadata.url} (Accessed: ${new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })})`;
+        reference = `${metadata.author ? `${metadata.author} ` : ""}(${new Date(metadata.date ?? "").getFullYear() ?? "n.d."}) ${metadata.title}. Available at: ${metadata.url} (Accessed: ${new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })})`;
         break;
       case "chicago":
-        reference = `${metadata.author ? `${metadata.author}. ` : ""}"${metadata.title}." Accessed ${metadata.date || new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}. ${metadata.url}.`;
+        reference = `${metadata.author ? `${metadata.author}. ` : ""}"${metadata.title}." Accessed ${metadata.date ?? new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}. ${metadata.url}.`;
         break;
     }
 

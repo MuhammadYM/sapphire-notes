@@ -1,6 +1,5 @@
 import "~/styles/globals.css";
 
-import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
 import SessionProvider from "./_components/SessionProvider";
 import { getServerSession } from "next-auth";
