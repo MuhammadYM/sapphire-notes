@@ -28,7 +28,7 @@ export const useLocalTopics = () => {
     const stored = localStorage.getItem("sapphire_local_topics");
     if (stored) {
       try {
-        setTopics(JSON.parse(stored));
+        setTopics(JSON.parse(stored) as LocalTopic[]);
       } catch (error) {
         console.error("Error parsing stored topics:", error);
         setTopics([]);
@@ -60,7 +60,7 @@ export const useLocalTopics = () => {
     const storedNotes = localStorage.getItem("sapphire_local_notes");
     if (storedNotes) {
       try {
-        const notes: LocalNote[] = JSON.parse(storedNotes);
+        const notes = JSON.parse(storedNotes) as LocalNote[];
         const filteredNotes = notes.filter(note => note.topicId !== id);
         localStorage.setItem("sapphire_local_notes", JSON.stringify(filteredNotes));
       } catch (error) {
@@ -77,7 +77,7 @@ export const useLocalTopics = () => {
       const stored = localStorage.getItem("sapphire_local_topics");
       if (stored) {
         try {
-          setTopics(JSON.parse(stored));
+          setTopics(JSON.parse(stored) as LocalTopic[]);
         } catch (error) {
           console.error("Error parsing stored topics:", error);
         }
@@ -99,7 +99,7 @@ export const useLocalNotes = (topicId: string | null) => {
     const stored = localStorage.getItem("sapphire_local_notes");
     if (stored) {
       try {
-        const allNotes: LocalNote[] = JSON.parse(stored);
+        const allNotes = JSON.parse(stored) as LocalNote[];
         const topicNotes = allNotes.filter(note => note.topicId === topicId);
         setNotes(topicNotes);
       } catch (error) {
@@ -133,7 +133,7 @@ export const useLocalNotes = (topicId: string | null) => {
     let allNotes: LocalNote[] = [];
     if (stored) {
       try {
-        allNotes = JSON.parse(stored);
+        allNotes = JSON.parse(stored) as LocalNote[];
       } catch (error) {
         console.error("Error parsing stored notes:", error);
       }
@@ -148,7 +148,7 @@ export const useLocalNotes = (topicId: string | null) => {
     const stored = localStorage.getItem("sapphire_local_notes");
     if (stored) {
       try {
-        const allNotes: LocalNote[] = JSON.parse(stored);
+        const allNotes = JSON.parse(stored) as LocalNote[];
         const updatedNotes = allNotes.filter(note => note.id !== id);
         saveNotes(updatedNotes);
       } catch (error) {
@@ -166,7 +166,7 @@ export const useLocalNotes = (topicId: string | null) => {
       const stored = localStorage.getItem("sapphire_local_notes");
       if (stored) {
         try {
-          const allNotes: LocalNote[] = JSON.parse(stored);
+          const allNotes = JSON.parse(stored) as LocalNote[];
           const topicNotes = allNotes.filter(note => note.topicId === topicId);
           setNotes(topicNotes);
         } catch (error) {

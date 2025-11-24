@@ -5,8 +5,6 @@ import ReactMarkdown from "react-markdown";
 
 import { type RouterOutputs } from "src/trpc/shared";
 
-type ServerNote = RouterOutputs["note"]["getAll"][0];
-
 // Flexible note type that works with both server and local notes
 export interface NoteCardProps {
   id: string;
